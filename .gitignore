@@ -1,0 +1,12 @@
+venv/
+.env
+__pycache__/
+*.pyc
+data/
+.DS_Store
+learnings/
+DESCRIPTION.md
+IMPLEMENTATION_PLAN.md
+README.md
+sample.pdf
+sample_2.pdf
