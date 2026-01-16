@@ -41,10 +41,19 @@ class TextChunker:
         while start < text_length:
             end = start + self.chunk_size
             chunk = text[start:end]
-            
+
             # Try to break at sentence/word boundary if possible
             if end < text_length:
                 # Look for last period, question mark, or exclamation
                 last_sentence = max(chunk.rfind('.'), chunk.rfind('?'), chunk.rfind('!'))
                 if last_sentence > self.chunk_size * 0.5:
-                    end = chunk[:last_sentence + 1]
+                    end = start + last_sentence + 1
+                    chunk = text[start:end] 
+
+            chunks.append(chunk.strip())
+            start = end - self.chunk_overlap
+
+            logger.info(f"Created chunk {len(chunks)}")
+
+        logger.info(f"Total chunks created: {len(chunks)} from text of length {text_length}")
+        return chunks
