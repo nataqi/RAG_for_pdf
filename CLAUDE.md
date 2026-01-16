@@ -38,7 +38,7 @@ data/
 [Update as you progress]
 - [x] Project structure created
 - [x] Basic FastAPI setup
-- [ ] PDF upload and processing
+- [x] PDF upload and processing
 - [ ] Embedding generation
 - [ ] Vector DB integration
 - [ ] Query and retrieval
