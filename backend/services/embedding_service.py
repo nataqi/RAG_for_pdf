@@ -2,7 +2,7 @@ from sentence_transformers import SentenceTransformer
 from typing import List
 import logging
 
-logging.basicCinfig(level=logging.INFO)
+logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
 class EmbeddingService:
@@ -17,17 +17,32 @@ class EmbeddingService:
         self.model = SentenceTransformer(model_name)
         logger.info(f"Model loaded succesfully: {model_name}")
         
-        def encode_text(self, text: str) -> List[float]:
-            """
-            Generate embedding for a single text.
+    def encode_text(self, text: str) -> List[float]:
+        """
+        Generate embedding for a single text.
 
-            Args:
-                text: Input text
+        Args:
+            text: Input text
 
-            Returns:
-                Embedding vector as list of floats
-            """
+        Returns:
+            Embedding vector as list of floats
+        """
 
-            embedding = self.model.encode(text, convert_to_tensor=False)
-            
-            return embedding.tolist()
+        embedding = self.model.encode(text, convert_to_tensor=False)
+
+        return embedding.tolist()
+
+    def encode_batch(self, texts: List[str]) -> List[List[float]]:
+        """
+        Generate embeddings for multiple texts.
+
+        Args:
+            texts: List of input texts
+
+        Returns:
+            List of embedding vectors
+        """
+        logger.info(f"Encoding batch of {len(texts)} texts...")
+        embeddings = self.model.encode(texts, convert_to_tensor=False)
+
+        return [emb.tolist() for emb in embeddings]
