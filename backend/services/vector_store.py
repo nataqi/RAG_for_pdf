@@ -40,7 +40,7 @@ class VectorStore:
             ids: Optional custom IDs for documents
         """
         if not ids:
-            [f"doc_{i}" for i in range(len(documents))]
+            ids = [f"doc_{i}" for i in range(len(documents))]
             
         self.collection.add(
             documents=documents,
