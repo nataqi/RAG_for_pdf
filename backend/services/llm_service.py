@@ -19,7 +19,7 @@ class LLMService:
             raise ValueError("ANTHROPIC_API_KEY not found in environment variables.")
 
         self.client = Anthropic(api_key=api_key)
-        self.model = "claude-3-5-haiku-20241022"
+        self.model = "claude-haiku-4-5-20251001"
         logger.info(f"LLMService initialized with model: {self.model}")
         
         
@@ -80,4 +80,5 @@ class LLMService:
         except Exception as e:
             logger.error(f"Error generating answer: {str(e)}")
             raise
-       
+    
+    
