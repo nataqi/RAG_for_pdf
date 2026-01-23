@@ -7,6 +7,8 @@ if __name__ == "__main__":
     print("=== Testing Document Processing ===")
     result = rag_service.process_document(file_path="sample.pdf", filename="sample.pdf")
     print(f"Processing result: {result}")
+  
+    
 
     print("\n=== Testing Question Answering ===")
     question = "What is Natalias education?"

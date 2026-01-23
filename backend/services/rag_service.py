@@ -16,7 +16,7 @@ class RAGService:
     def __init__(self):
         """Initialize all services"""
         self.pdf_processor = PDFProcessor()
-        self.text_chunker = TextChunker(chunk_size=500, overlap=50)
+        self.text_chunker = TextChunker(chunk_size=500, chunk_overlap=50)
         self.embedding_service = EmbeddingService()
         self.vector_store = VectorStore()
         self.llm_service = LLMService()
@@ -48,22 +48,31 @@ class RAGService:
             return {"success": False, "error": "No text chunks created"}
         
         # Generate embeddings
-        embeddings = self.embedding_service.generate_embeddings(chunks)
+        embeddings = self.embedding_service.encode_batch(chunks)
         if not embeddings:
             logger.error(f"Embedding generation failed for {filename}")
             return {"success": False, "error": "Embedding generation failed"}
         
         # Store in vector database
         doc_id = self._generate_doc_id(filename)
-        for i in range(len(chunks)):
-            metadatas = {
+        metadatas = [
+            {
                 "source_file": filename,
                 "chunk_index": i,
                 "doc_id": doc_id,
                 "timestamp": datetime.now().isoformat()
             }
-            
+            for i in range(len(chunks))
+        ]
+
         ids = [f"{doc_id}_chunk_{i}" for i in range(len(chunks))]
+
+        self.vector_store.add_documents(
+            documents=chunks,
+            embeddings=embeddings,
+            metadatas=metadatas,
+            ids=ids
+        )   
         
         logger.info(f"Document processed successfully: {len(chunks)} chunks stored")
 
@@ -110,7 +119,7 @@ class RAGService:
         )):
             sources.append({
                 "chunk_text": doc[:200] + "..." if len(doc) > 200 else doc,
-                "filename": metadata.get('filename', 'Unknown'),
+                "filename": metadata.get('source_file', 'Unknown'),
                 "chunk_index": metadata.get('chunk_index', i),
                 "relevance_score": float(1 - distance)  # Convert distance to similarity
             })
