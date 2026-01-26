@@ -11,7 +11,7 @@ if __name__ == "__main__":
     
 
     print("\n=== Testing Question Answering ===")
-    question = "What is Natalias education?"
+    question = "What are the authors names?"
     answer_result = rag_service.answer_question(question)
 
     if not answer_result.get('success'):
