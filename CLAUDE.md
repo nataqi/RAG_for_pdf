@@ -27,6 +27,7 @@ data/
 - **Secrets:** Using .env file, never commit to git
 - **Environment:** Virtual environment (venv/) per project
 - **Development approach:** Build incrementally, understand each piece
+- **Duplicate Prevention:** Content-based hashing - same file content gets same doc_id, preventing duplicates automatically
 
 ## How RAG Works Here
 1. User uploads PDF → extract text → chunk into pieces
@@ -39,10 +40,13 @@ data/
 - [x] Project structure created
 - [x] Basic FastAPI setup
 - [x] PDF upload and processing
-- [ ] Embedding generation
-- [ ] Vector DB integration
-- [ ] Query and retrieval
-- [ ] LLM integration
+- [x] Embedding generation
+- [x] Vector DB integration
+- [x] Query and retrieval
+- [x] LLM integration
+- [x] RAG pipeline complete
+- [x] Content-based duplicate prevention
+- [ ] FastAPI endpoints
 - [ ] Streamlit UI
 
 ## Communication Preferences

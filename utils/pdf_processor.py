@@ -26,7 +26,7 @@ class PDFProcessor:
                 reader = PyPDF2.PdfReader(file)
                 text = ""
                 
-                for page_num, page in enumerate(reader.pages):
+                for page in reader.pages:
                     page_text = page.extract_text()
                     text += page_text + "\n"
                 
