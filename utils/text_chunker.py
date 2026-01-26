@@ -34,7 +34,7 @@ class TextChunker:
         text_length = len(text)
         chunks = []
         
-        if not text or not text.strip():
+        if not text.strip():
             logger.warning("Empty text provided for chunking")
             return []
 
@@ -45,7 +45,7 @@ class TextChunker:
             # Try to break at sentence/word boundary if possible
             if end < text_length:
                 # Look for last period, question mark, or exclamation
-                last_sentence = max(chunk.rfind('.'), chunk.rfind('?'), chunk.rfind('!'))
+                last_sentence = max(chunk.rfind('.'), chunk.rfind('?'), chunk.rfind('!')) #returns index of last occurrence
                 if last_sentence > self.chunk_size * 0.5:
                     end = start + last_sentence + 1
                     chunk = text[start:end] 
