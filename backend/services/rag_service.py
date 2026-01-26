@@ -54,7 +54,7 @@ class RAGService:
             return {"success": False, "error": "Embedding generation failed"}
         
         # Store in vector database
-        doc_id = self._generate_doc_id(filename)
+        doc_id = self._generate_doc_id(file_path)
         metadatas = [
             {
                 "source_file": filename,
@@ -133,11 +133,24 @@ class RAGService:
             "sources": sources
         }
         
-    def _generate_doc_id(self, filename: str) -> str:
-        """Generate unique document ID"""
-        return hashlib.md5(
-        f"{filename}_{datetime.now().isoformat()}".encode()
-        ).hexdigest()[:12]
+    def _generate_doc_id(self, file_path: str) -> str:
+        """
+        Generate document ID based on file content.
+
+        This uses content-based hashing to prevent duplicates:
+        - Same file content = same doc_id = ChromaDB updates existing chunks
+        - Different content = different doc_id = keeps both versions
+        - Renamed files with same content are detected as duplicates
+
+        Args:
+            file_path: Path to the PDF file
+
+        Returns:
+            12-character hash of file content
+        """
+        with open(file_path, 'rb') as f:
+            content = f.read()
+        return hashlib.md5(content).hexdigest()[:12]
 
     def get_stats(self) -> Dict:
         """Get database statistics"""
