@@ -46,7 +46,7 @@ data/
 - [x] LLM integration
 - [x] RAG pipeline complete
 - [x] Content-based duplicate prevention
-- [ ] FastAPI endpoints
+- [x] FastAPI endpoints
 - [ ] Streamlit UI
 
 ## Communication Preferences
